@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TMS Business Dashboard - All-In-One</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e0e0e0;
+            overflow-x: auto;
+        }
+        
+        .nav-tab {
+            padding: 15px 20px;
+            background: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .nav-tab:hover {
+            color: #333;
+            background: #f8f9fa;
+        }
+        
+        .nav-tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+        
+        .section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            display: none;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        .section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 4px solid #667eea;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+            margin: 8px 0;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 12px;
+        }
+        
+        .lead-card {
+            border: 2px solid #f0f0f0;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        
+        .lead-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .lead-name {
+            font-weight: bold;
+            color: #333;
+            font-size: 16px;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        .status-hot {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .status-warm {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .lead-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            font-size: 12px;
+        }
+        
+        .detail {
+            color: #999;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: #666;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        th {
+            background: #f8f9fa;
+            padding: 10px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+            border-bottom: 2px solid #e0e0e0;
+            font-size: 12px;
+        }
+        
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #e0e0e0;
+            color: #666;
+            font-size: 13px;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .positive {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .negative {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .pricing-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+        
+        .script-box {
+            background: #f8f9fa;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            border-left: 4px solid #764ba2;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+        
+        .preset-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+        
+        .preset {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 6px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .preset.active {
+            border-color: #667eea;
+            background: #f0f2ff;
+        }
+        
+        .footer {
+            text-align: center;
+            color: #666;
+            padding: 20px;
+            font-size: 12px;
+            border-top: 1px solid #e0e0e0;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 TMS Business Dashboard</h1>
+            <p>All-In-One Control Center • Real Estate • Sales • Finance • Goals</p>
+        </div>
+        
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="switchTab('leads')">📞 Lead Tracker</button>
+            <button class="nav-tab" onclick="switchTab('financial')">💰 Financials</button>
+            <button class="nav-tab" onclick="switchTab('sales')">📊 Sales Process</button>
+            <button class="nav-tab" onclick="switchTab('goals')">🎯 Money Goals</button>
+        </div>
+        
+        <!-- SECTION 1: LEAD TRACKER -->
+        <div id="leads" class="section active">
+            <h2>📞 Real Estate Lead Tracker</h2>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-label">Active Leads</div>
+                    <div class="stat-value">4</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Potential Revenue</div>
+                    <div class="stat-value">$2,600-4,800</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Hot Leads</div>
+                    <div class="stat-value">1</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Warm Leads</div>
+                    <div class="stat-value">3</div>
+                </div>
+            </div>
+            
+            <div class="lead-card">
+                <div class="lead-header">
+                    <div class="lead-name">Mr. Ali (Husnan Ali)</div>
+                    <span class="status status-hot">🔥 HOT</span>
+                </div>
+                <div class="lead-details">
+                    <div class="detail"><span class="detail-label">Instagram:</span> @husnanrealty</div>
+                    <div class="detail"><span class="detail-label">Email:</span> husnan.ali1@outlook.com</div>
+                    <div class="detail"><span class="detail-label">Last Contact:</span> Apr 5</div>
+                    <div class="detail"><span class="detail-label">Next Action:</span> Send Pricing</div>
+                    <div class="detail"><span class="detail-label">Value:</span> $300-1,000/mo</div>
+                </div>
+            </div>
+            
+            <div class="lead-card">
+                <div class="lead-header">
+                    <div class="lead-name">Ms. Pollard</div>
+                    <span class="status status-warm">🟡 WARM</span>
+                </div>
+                <div class="lead-details">
+                    <div class="detail"><span class="detail-label">Phone:</span> (267) 240-7753</div>
+                    <div class="detail"><span class="detail-label">Last Contact:</span> Apr 4</div>
+                    <div class="detail"><span class="detail-label">Next Action:</span> Send Pricing</div>
+                    <div class="detail"><span class="detail-label">Value:</span> $300-1,000/mo</div>
+                </div>
+            </div>
+            
+            <div class="lead-card">
+                <div class="lead-header">
+                    <div class="lead-name">Mr. Fracassi</div>
+                    <span class="status status-warm">🟡 WARM</span>
+                </div>
+                <div class="lead-details">
+                    <div class="detail"><span class="detail-label">Phone:</span> (215) 360-3434</div>
+                    <div class="detail"><span class="detail-label">Last Contact:</span> Apr 3</div>
+                    <div class="detail"><span class="detail-label">Next Action:</span> Keep Warm</div>
+                    <div class="detail"><span class="detail-label">Value:</span> $300-1,000/mo</div>
+                </div>
+            </div>
+            
+            <div class="lead-card">
+                <div class="lead-header">
+                    <div class="lead-name">Mr. Day</div>
+                    <span class="status status-warm">🟡 WARM</span>
+                </div>
+                <div class="lead-details">
+                    <div class="detail"><span class="detail-label">Phone:</span> TBD</div>
+                    <div class="detail"><span class="detail-label">Last Contact:</span> Apr 4</div>
+                    <div class="detail"><span class="detail-label">Next Action:</span> Follow Up</div>
+                    <div class="detail"><span class="detail-label">Value:</span> TBD</div>
+                </div>
+            </div>
+            
+            <h2 style="margin-top: 30px;">💵 Pricing Tiers</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="price">$300</div>
+                    <strong>Starter</strong>
+                    <p style="font-size: 11px; color: #666; margin-top: 8px;">
+                        • 2 Reels/week<br>
+                        • 3 Posts/week<br>
+                        • 1 Platform
+                    </p>
+                </div>
+                <div class="pricing-card">
+                    <div class="price">$650</div>
+                    <strong>Growth</strong>
+                    <p style="font-size: 11px; color: #666; margin-top: 8px;">
+                        • 4 Reels/week<br>
+                        • 6 Posts/week<br>
+                        • 2 Platforms<br>
+                        • Weekly calls
+                    </p>
+                </div>
+                <div class="pricing-card">
+                    <div class="price">$1,000</div>
+                    <strong>Premium</strong>
+                    <p style="font-size: 11px; color: #666; margin-top: 8px;">
+                        • 5 Reels/week<br>
+                        • 10 Posts/week<br>
+                        • All Platforms<br>
+                        • Paid ads
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SECTION 2: FINANCIAL -->
+        <div id="financial" class="section">
+            <h2>💰 Financial Dashboard</h2>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-label">4-Month Revenue</div>
+                    <div class="stat-value">$8,028</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Monthly Average</div>
+                    <div class="stat-value">$2,007</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Total Expenses</div>
+                    <div class="stat-value">$4,855</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Net Profit</div>
+                    <div class="stat-value positive">$3,173</div>
+                </div>
+            </div>
+            
+            <h2 style="margin-top: 20px; font-size: 18px;">Monthly Breakdown</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Month</th>
+                        <th>Income</th>
+                        <th>Expenses</th>
+                        <th>Net</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>December 2025</td>
+                        <td>$665</td>
+                        <td>$1,000</td>
+                        <td class="negative">-$335</td>
+                    </tr>
+                    <tr>
+                        <td>January 2026</td>
+                        <td>$2,034</td>
+                        <td>$1,225</td>
+                        <td class="positive">+$809</td>
+                    </tr>
+                    <tr>
+                        <td>February 2026</td>
+                        <td>$2,349</td>
+                        <td>$1,010</td>
+                        <td class="positive">+$1,339</td>
+                    </tr>
+                    <tr>
+                        <td>March 2026</td>
+                        <td>$2,980</td>
+                        <td>$1,620</td>
+                        <td class="positive">+$1,360</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h2 style="margin-top: 20px; font-size: 18px;">Income Sources</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Source</th>
+                        <th>Amount</th>
+                        <th>%</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Zelle Transfers</td>
+                        <td>$4,363</td>
+                        <td>54%</td>
+                    </tr>
+                    <tr>
+                        <td>Cash App (TMS)</td>
+                        <td>$1,506</td>
+                        <td>19%</td>
+                    </tr>
+                    <tr>
+                        <td>Square Deposits</td>
+                        <td>$1,047</td>
+                        <td>13%</td>
+                    </tr>
+                    <tr>
+                        <td>Direct Transfers</td>
+                        <td>$959</td>
+                        <td>12%</td>
+                    </tr>
+                    <tr>
+                        <td>Cash Deposits</td>
+                        <td>$153</td>
+                        <td>2%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- SECTION 3: SALES PROCESS -->
+        <div id="sales" class="section">
+            <h2>📊 Sales Process Tracker</h2>
+            
+            <h2 style="margin-top: 20px; font-size: 18px;">Sales Scripts</h2>
+            
+            <div class="script-box">
+                <strong>Initial Outreach:</strong><br>
+                "Hey [Name], I help real estate agents grow through strategic social media. I've noticed you're in [area]. Quick 15-min call?"
+            </div>
+            
+            <div class="script-box">
+                <strong>Pricing Follow-Up:</strong><br>
+                "Hey [Name], just wanted to follow up. We offer 3 packages: $300 Starter (2 reels, 3 posts), $650 Growth (4 reels, 6 posts, 2 platforms), $1,000 Premium (5 reels, 10 posts, all platforms). Which fits best?"
+            </div>
+            
+            <div class="script-box">
+                <strong>Value Pitch:</strong><br>
+                "Our agents see: ✅ 3-5x more leads, ✅ 40% better engagement, ✅ No in-house hiring needed. Most make back their fee in 1-2 months. Let's talk about your goals."
+            </div>
+            
+            <div class="script-box">
+                <strong>Urgency Close:</strong><br>
+                "Hey [Name], I'm booking Q2 clients. Want to lock in your spot? What day next week works for a 15-min call?"
+            </div>
+            
+            <h2 style="margin-top: 20px; font-size: 18px;">Pipeline Status</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Stage</th>
+                        <th>Leads</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Interest</td>
+                        <td>1 (Mr. Day)</td>
+                        <td>TBD</td>
+                    </tr>
+                    <tr>
+                        <td>Pricing Sent</td>
+                        <td>3 (Pollard, Fracassi, Ali)</td>
+                        <td>$900-3,000/mo</td>
+                    </tr>
+                    <tr>
+                        <td>Negotiating</td>
+                        <td>0</td>
+                        <td>$0</td>
+                    </tr>
+                    <tr>
+                        <td>Closed</td>
+                        <td>0</td>
+                        <td>$0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- SECTION 4: GOALS -->
+        <div id="goals" class="section">
+            <h2>🎯 Money Goals & Gear Budget</h2>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-label">Summer Goal</div>
+                    <div class="stat-value">$6,000+</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Gear Budget</div>
+                    <div class="stat-value">$2,700+</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Current Savings</div>
+                    <div class="stat-value">$500</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Timeline</div>
+                    <div class="stat-value">Summer 26</div>
+                </div>
+            </div>
+            
+            <h2 style="margin-top: 20px; font-size: 18px;">Gear Wishlist</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Gear</th>
+                        <th>Price</th>
+                        <th>Priority</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Drone (DJI Air 3S)</td>
+                        <td>$1,000</td>
+                        <td>🔴 High</td>
+                    </tr>
+                    <tr>
+                        <td>Sony 16-35mm Lens</td>
+                        <td>$1,200</td>
+                        <td>🔴 High</td>
+                    </tr>
+                    <tr>
+                        <td>Meta Glasses</td>
+                        <td>$300</td>
+                        <td>🟡 Medium</td>
+                    </tr>
+                    <tr>
+                        <td>Camera Flash</td>
+                        <td>$150</td>
+                        <td>🟢 Low</td>
+                    </tr>
+                    <tr>
+                        <td>Gimbal Handle</td>
+                        <td>$50</td>
+                        <td>🟢 Low</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h2 style="margin-top: 20px; font-size: 18px;">Money Split Presets</h2>
+            <div class="preset-grid">
+                <div class="preset active">
+                    <strong>⚡ EQUIPMENT</strong><br>
+                    60% Equipment<br>20% Personal<br>20% Ads
+                </div>
+                <div class="preset">
+                    <strong>⚖️ BALANCED</strong><br>
+                    50% Personal<br>25% Equipment<br>25% Ads
+                </div>
+                <div class="preset">
+                    <strong>📈 GROWTH</strong><br>
+                    50% Ads<br>30% Equipment<br>20% Personal
+                </div>
+                <div class="preset">
+                    <strong>💰 PERSONAL</strong><br>
+                    70% Personal<br>15% Ads<br>15% Equipment
+                </div>
+                <div class="preset">
+                    <strong>🚨 DEBT</strong><br>
+                    50% Debt<br>30% Personal<br>20% Ads
+                </div>
+                <div class="preset">
+                    <strong>💵 CASH GRAB</strong><br>
+                    80% Personal<br>10% Ads<br>10% Equipment
+                </div>
+            </div>
+            
+            <h2 style="margin-top: 20px; font-size: 18px;">April Goals</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Goal</th>
+                        <th>Target</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>New TMS Clients</td>
+                        <td>2-3</td>
+                        <td>In Progress</td>
+                    </tr>
+                    <tr>
+                        <td>New Monthly Revenue</td>
+                        <td>$1,600-2,400</td>
+                        <td>In Progress</td>
+                    </tr>
+                    <tr>
+                        <td>Total Monthly Income</td>
+                        <td>$3,600-4,400</td>
+                        <td>In Progress</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="footer">
+            <p>🎯 TMS All-In-One Business Dashboard • Last Updated: April 5, 2026</p>
+            <p style="margin-top: 8px;">Tell Jalen about updates and the dashboard syncs automatically</p>
+        </div>
+    </div>
+    
+    <script>
+        function switchTab(tabName) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            // Remove active from all tabs
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected section
+            document.getElementById(tabName).classList.add('active');
+            
+            // Mark tab as active
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
