@@ -509,6 +509,73 @@
                     </tr>
                 </tbody>
             </table>
+            
+            <h2 style="margin-top: 30px; font-size: 18px;">📊 Spending Breakdown (Dec 2025 - Mar 2026)</h2>
+            <p style="color: #666; margin-bottom: 20px;"><strong>Total Spent: $4,445</strong> across Chase + CashApp</p>
+            <canvas id="expenseChart" style="max-width: 500px; margin: 20px 0;"></canvas>
+            
+            <h2 style="margin-top: 30px; font-size: 18px;">Expense Categories</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Amount</th>
+                        <th>%</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Sending Money to People</td>
+                        <td>$1,240</td>
+                        <td>27.9%</td>
+                    </tr>
+                    <tr>
+                        <td>Shopping & Other</td>
+                        <td>$500</td>
+                        <td>11.2%</td>
+                    </tr>
+                    <tr>
+                        <td>Subscriptions</td>
+                        <td>$450</td>
+                        <td>10.1%</td>
+                    </tr>
+                    <tr>
+                        <td>To Motion Supply</td>
+                        <td>$410</td>
+                        <td>9.2%</td>
+                    </tr>
+                    <tr>
+                        <td>Food & Groceries</td>
+                        <td>$380</td>
+                        <td>8.5%</td>
+                    </tr>
+                    <tr>
+                        <td>Transportation</td>
+                        <td>$320</td>
+                        <td>7.2%</td>
+                    </tr>
+                    <tr>
+                        <td>Entertainment & Events</td>
+                        <td>$250</td>
+                        <td>5.6%</td>
+                    </tr>
+                    <tr>
+                        <td>Loans & Payments</td>
+                        <td>$200</td>
+                        <td>4.5%</td>
+                    </tr>
+                    <tr>
+                        <td>Business/Ad Spend</td>
+                        <td>$180</td>
+                        <td>4.0%</td>
+                    </tr>
+                    <tr>
+                        <td>Misc</td>
+                        <td>$100</td>
+                        <td>2.2%</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         
         <!-- SECTION 3: SALES PROCESS -->
@@ -831,6 +898,57 @@
     </div>
     
     <script>
+        // Pie Chart for Expenses
+        const ctx = document.getElementById('expenseChart');
+        if (ctx) {
+            const chart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: [
+                        'Sending Money to People (27.9%)',
+                        'Shopping & Other (11.2%)',
+                        'Subscriptions (10.1%)',
+                        'To Motion Supply (9.2%)',
+                        'Food & Groceries (8.5%)',
+                        'Transportation (7.2%)',
+                        'Entertainment & Events (5.6%)',
+                        'Loans & Payments (4.5%)',
+                        'Business/Ad Spend (4.0%)',
+                        'Misc (2.2%)'
+                    ],
+                    datasets: [{
+                        data: [1240, 500, 450, 410, 380, 320, 250, 200, 180, 100],
+                        backgroundColor: [
+                            '#667eea',
+                            '#764ba2',
+                            '#f093fb',
+                            '#4facfe',
+                            '#00f2fe',
+                            '#43e97b',
+                            '#fa709a',
+                            '#fee140',
+                            '#30b0fe',
+                            '#a8edea'
+                        ],
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                font: { size: 12 },
+                                padding: 15
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
         function switchTab(tabName) {
             // Hide all sections
             const sections = document.querySelectorAll('.section');
